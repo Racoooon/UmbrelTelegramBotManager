@@ -11,6 +11,7 @@ services:
     restart: on-failure
     stop_grace_period: 1m
     init: true
+    user: "0:0"
     working_dir: /data/src
     environment:
       FXBOT_DATA_DIR: /data
@@ -28,12 +29,11 @@ services:
         import io, os, pathlib, subprocess, tarfile, urllib.request
         data = pathlib.Path("/data")
         src = data / "src"
-        src.mkdir(parents=True, exist_ok=True)
-        (data / "logs").mkdir(exist_ok=True)
-        (data / "config").mkdir(exist_ok=True)
+        for p in (data, src, data / "logs", data / "config", data / ".local"):
+            p.mkdir(parents=True, exist_ok=True)
         if not (src / "main.py").exists():
             print("downloading source from GitHub", flush=True)
-            raw = urllib.request.urlopen(os.environ["SOURCE_TARBALL"], timeout=60).read()
+            raw = urllib.request.urlopen(os.environ["SOURCE_TARBALL"], timeout=90).read()
             with tarfile.open(fileobj=io.BytesIO(raw), mode="r:gz") as tf:
                 for m in tf.getmembers():
                     marker = "/homeapps-botmanager/src/"
@@ -53,5 +53,5 @@ services:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/api/health')"]
       interval: 20s
       timeout: 5s
-      retries: 10
+      retries: 12
       start_period: 180s
