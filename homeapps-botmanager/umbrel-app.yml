@@ -2,9 +2,9 @@ manifestVersion: 1
 id: homeapps-botmanager
 name: Telegram Botmanager
 tagline: Manage ThePirateBot — X, Instagram and crypto on Telegram
-icon: https://raw.githubusercontent.com/YOUR_GITHUB_USER/YOUR_REPO/main/homeapps-botmanager/icon.svg
+icon: https://raw.githubusercontent.com/Racoooon/UmbrelTelegramBotManager/main/homeapps-botmanager/icon.svg
 category: social
-version: "1.0.1"
+version: "1.0.2"
 port: 3847
 description: >-
   Telegram Botmanager runs ThePirateBot on your Umbrel.
@@ -26,8 +26,8 @@ developer: Home Apps
 website: https://fixupx.com
 submitter: Home Apps
 submission: ""
-repo: https://github.com/YOUR_GITHUB_USER/YOUR_REPO
-support: https://github.com/YOUR_GITHUB_USER/YOUR_REPO/issues
+repo: https://github.com/Racoooon/UmbrelTelegramBotManager
+support: https://github.com/Racoooon/UmbrelTelegramBotManager/issues
 gallery: []
 releaseNotes: >-
   1.0.1 — Renamed to Telegram Botmanager / ThePirateBot, Instagram rewrite,
