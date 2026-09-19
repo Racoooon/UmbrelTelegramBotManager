@@ -1,0 +1,5 @@
+# Community App Store manifest.
+# Umbrel shows this as "Home Apps App Store" after you add the GitHub URL
+# under App Store → ⋯ → Community App Stores.
+id: "homeapps"
+name: "Home Apps"
