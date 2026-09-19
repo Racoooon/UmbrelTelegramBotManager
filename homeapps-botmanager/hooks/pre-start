@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+APP_DATA_DIR="${APP_DATA_DIR:?APP_DATA_DIR is not set}"
+SRC="${APP_DATA_DIR}/src"
+DATA="${APP_DATA_DIR}/data"
+
+mkdir -p "${SRC}" "${DATA}"
+
+if [ ! -f "${SRC}/entrypoint.sh" ] || [ ! -f "${SRC}/main.py" ]; then
+  echo "pre-start: seeding source from GitHub"
+  tmp="$(mktemp -d)"
+  curl -fsSL "https://github.com/Racoooon/UmbrelTelegramBotManager/archive/refs/heads/main.tar.gz" \
+    | tar -xz -C "${tmp}"
+  inner="$(find "${tmp}" -type d -path "*/homeapps-botmanager/src" | head -n 1)"
+  if [ -z "${inner}" ]; then
+    echo "pre-start: could not find src in the GitHub archive" >&2
+    exit 1
+  fi
+  cp -a "${inner}/." "${SRC}/"
+  rm -rf "${tmp}"
+fi
+
+chown -R 1000:1000 "${SRC}" "${DATA}" || true
+chmod +x "${SRC}/entrypoint.sh" || true
