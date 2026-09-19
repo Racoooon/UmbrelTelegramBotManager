@@ -1,0 +1,38 @@
+manifestVersion: 1
+id: homeapps-botmanager
+name: Telegram Botmanager
+tagline: Manage ThePirateBot — X, Instagram and crypto on Telegram
+icon: https://raw.githubusercontent.com/YOUR_GITHUB_USER/YOUR_REPO/main/homeapps-botmanager/icon.svg
+category: social
+version: "1.0.1"
+port: 3847
+description: >-
+  Telegram Botmanager runs ThePirateBot on your Umbrel.
+
+
+  ThePirateBot rewrites x.com / twitter.com links to FixupX and instagram.com
+  links to an embed host (kirkstagram by default, switchable in Settings) so
+  Telegram can show the media. Delete is limited to the original poster.
+  Link-only originals are removed when the bot is a group admin.
+
+
+  Crypto commands: /p /c /ath /trending /dom (CoinGecko).
+
+
+  Open this app to paste the BotFather token, switch reply language
+  (English / Deutsch), start / stop / restart ThePirateBot, read logs, and
+  edit every relevant source file — the whole bot lives in thepiratebot.py.
+developer: Home Apps
+website: https://fixupx.com
+submitter: Home Apps
+submission: ""
+repo: https://github.com/YOUR_GITHUB_USER/YOUR_REPO
+support: https://github.com/YOUR_GITHUB_USER/YOUR_REPO/issues
+gallery: []
+releaseNotes: >-
+  1.0.1 — Renamed to Telegram Botmanager / ThePirateBot, Instagram rewrite,
+  single-file bot, editor lists all source files.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Telegram Botmanager</title>
+  <link rel="stylesheet" href="/static/app.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="mark">P</span>
+      <div>
+        <strong>Telegram Botmanager</strong>
+        <small>ThePirateBot · X · Instagram · crypto</small>
+      </div>
+    </div>
+    <div class="pill" id="bot-pill">checking…</div>
+  </header>
+
+  <nav class="tabs">
+    <button data-tab="status" class="active">Status</button>
+    <button data-tab="settings">Settings</button>
+    <button data-tab="editor">Source editor</button>
+  </nav>
+
+  <main>
+    <section id="tab-status" class="panel active">
+      <div class="row">
+        <button id="btn-start" class="ok">Start</button>
+        <button id="btn-stop" class="warn">Stop</button>
+        <button id="btn-restart">Restart</button>
+        <button id="btn-refresh-log" class="ghost">Refresh log</button>
+      </div>
+      <dl class="meta" id="status-meta"></dl>
+      <pre id="log" class="log">Loading logs…</pre>
+    </section>
+
+    <section id="tab-settings" class="panel">
+      <form id="settings-form">
+        <label>
+          Telegram bot token
+          <input type="password" name="bot_token" id="bot_token" autocomplete="off" placeholder="123456:ABC…" />
+        </label>
+        <label>
+          Bot reply language
+          <select name="bot_language" id="bot_language">
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+          </select>
+        </label>
+        <label>
+          Default quote currency
+          <input type="text" name="vs_currency" id="vs_currency" maxlength="4" />
+        </label>
+        <label>
+          Instagram embed host
+          <select name="instagram_fix_host" id="instagram_fix_host">
+            <option value="kirkstagram.com">kirkstagram.com</option>
+            <option value="ddinstagram.com">ddinstagram.com</option>
+            <option value="kkinstagram.com">kkinstagram.com</option>
+            <option value="instagramez.com">instagramez.com</option>
+            <option value="eeinstagram.com">eeinstagram.com</option>
+          </select>
+        </label>
+        <label class="check">
+          <input type="checkbox" name="delete_link_only_originals" id="delete_link_only_originals" />
+          Delete original message when it contains only X or Instagram links
+        </label>
+        <label class="check">
+          <input type="checkbox" name="auto_start_bot" id="auto_start_bot" />
+          Start the bot automatically when this app starts
+        </label>
+        <button type="submit" class="ok">Save settings</button>
+        <p class="hint" id="settings-hint"></p>
+      </form>
+    </section>
+
+    <section id="tab-editor" class="panel">
+      <div class="editor-layout">
+        <aside>
+          <div class="aside-head">
+            <span>/data/src</span>
+            <button id="btn-reset-src" class="ghost danger">Reset to packaged</button>
+          </div>
+          <div id="file-tree" class="tree">Loading…</div>
+        </aside>
+        <div class="editor-main">
+          <div class="editor-bar">
+            <span id="open-path">Pick a file</span>
+            <button id="btn-save" class="ok" disabled>Save</button>
+          </div>
+          <textarea id="code" spellcheck="false" disabled placeholder="Select a file on the left."></textarea>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

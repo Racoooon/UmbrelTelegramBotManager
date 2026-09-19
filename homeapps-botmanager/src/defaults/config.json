@@ -1,0 +1,9 @@
+{
+  "bot_token": "",
+  "bot_language": "en",
+  "delete_link_only_originals": true,
+  "vs_currency": "usd",
+  "instagram_fix_host": "kirkstagram.com",
+  "allowed_chat_ids": [],
+  "auto_start_bot": true
+}

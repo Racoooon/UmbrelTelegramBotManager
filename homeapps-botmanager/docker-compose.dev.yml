@@ -1,0 +1,19 @@
+# Local test stack (not used by Umbrel).
+# From homeapps-botmanager/:
+#   docker compose -f docker-compose.dev.yml up --build
+version: "3.7"
+services:
+  web:
+    build: .
+    ports:
+      - "3847:8080"
+    environment:
+      FXBOT_DATA_DIR: /data
+      FXBOT_PACKAGED_SRC: /opt/default-src
+      FXBOT_WEB_HOST: 0.0.0.0
+      FXBOT_WEB_PORT: 8080
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+    volumes:
+      - ./dev-data:/data
+      - ./src:/opt/default-src:ro
+    user: "1000:1000"

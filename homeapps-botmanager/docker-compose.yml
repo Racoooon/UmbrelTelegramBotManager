@@ -1,0 +1,38 @@
+version: "3.7"
+
+# Umbrel wires app_proxy to the web dashboard.
+# APP_HOST must be: <app-id>_<service-name>_1
+services:
+  app_proxy:
+    environment:
+      APP_HOST: homeapps-botmanager_web_1
+      APP_PORT: 8080
+      # Keep Umbrel login in front of the editor (token + source live here).
+
+  web:
+    build: .
+    image: homeapps-botmanager:1.0.1
+    restart: on-failure
+    stop_grace_period: 1m
+    user: "1000:1000"
+    init: true
+    working_dir: /data/src
+    environment:
+      # Persistent data (config, editable source copy, logs, pip cache).
+      FXBOT_DATA_DIR: /data
+      # Read-only copy of the packaged source (for first-run seed + reset).
+      FXBOT_PACKAGED_SRC: /opt/default-src
+      FXBOT_WEB_HOST: 0.0.0.0
+      FXBOT_WEB_PORT: 8080
+      # Optional: pre-fill token from Umbrel env. The UI can override it.
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      # App-folder source shipped in the community store package.
+      - ./src:/opt/default-src:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/api/health')"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
