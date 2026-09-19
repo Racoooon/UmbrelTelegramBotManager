@@ -10,23 +10,48 @@ services:
     image: python:3.12-slim-bookworm
     restart: on-failure
     stop_grace_period: 1m
-    user: "1000:1000"
     init: true
-    working_dir: /opt/default-src
-    entrypoint: ["bash", "/opt/default-src/entrypoint.sh"]
+    working_dir: /data/src
     environment:
       FXBOT_DATA_DIR: /data
-      FXBOT_PACKAGED_SRC: /opt/default-src
+      FXBOT_PACKAGED_SRC: /data/src
       FXBOT_WEB_HOST: 0.0.0.0
       FXBOT_WEB_PORT: 8080
-      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
       HOME: /data
+      SOURCE_TARBALL: https://github.com/Racoooon/UmbrelTelegramBotManager/archive/refs/heads/main.tar.gz
     volumes:
       - ${APP_DATA_DIR}/data:/data
-      - ${APP_DATA_DIR}/src:/opt/default-src:ro
+    command:
+      - python
+      - -c
+      - |
+        import io, os, pathlib, subprocess, tarfile, urllib.request
+        data = pathlib.Path("/data")
+        src = data / "src"
+        src.mkdir(parents=True, exist_ok=True)
+        (data / "logs").mkdir(exist_ok=True)
+        (data / "config").mkdir(exist_ok=True)
+        if not (src / "main.py").exists():
+            print("downloading source from GitHub", flush=True)
+            raw = urllib.request.urlopen(os.environ["SOURCE_TARBALL"], timeout=60).read()
+            with tarfile.open(fileobj=io.BytesIO(raw), mode="r:gz") as tf:
+                for m in tf.getmembers():
+                    marker = "/homeapps-botmanager/src/"
+                    if marker not in m.name or m.isdir():
+                        continue
+                    dest = src / m.name.split(marker, 1)[1]
+                    dest.parent.mkdir(parents=True, exist_ok=True)
+                    f = tf.extractfile(m)
+                    if f:
+                        dest.write_bytes(f.read())
+            print("source ready", flush=True)
+        os.environ["HOME"] = "/data"
+        subprocess.check_call(["python", "-m", "pip", "install", "--user", "-q", "-r", str(src / "requirements.txt")])
+        os.chdir(src)
+        os.execv("/usr/local/bin/python", ["python", "main.py"])
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/api/health')"]
       interval: 20s
       timeout: 5s
-      retries: 8
-      start_period: 120s
+      retries: 10
+      start_period: 180s
