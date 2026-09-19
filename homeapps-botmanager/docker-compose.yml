@@ -23,10 +23,10 @@ services:
       HOME: /data
     volumes:
       - ${APP_DATA_DIR}/data:/data
-      - ./src:/opt/default-src:ro
+      - ${APP_DATA_DIR}/src:/opt/default-src:ro
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/api/health')"]
       interval: 20s
       timeout: 5s
       retries: 8
-      start_period: 90s
+      start_period: 120s
