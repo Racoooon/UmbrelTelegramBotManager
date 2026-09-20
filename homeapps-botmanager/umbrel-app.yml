@@ -1,10 +1,10 @@
-manifestVersion: 1.1
+manifestVersion: 1.2
 id: homeapps-botmanager
 name: Telegram Botmanager
 tagline: Manage ThePirateBot — X, Instagram and crypto on Telegram
 icon: https://raw.githubusercontent.com/Racoooon/UmbrelTelegramBotManager/main/homeapps-botmanager/icon.svg
 category: social
-version: "1.0.3"
+version: "1.0.4"
 port: 3847
 description: >-
   Telegram Botmanager runs ThePirateBot on your Umbrel.
